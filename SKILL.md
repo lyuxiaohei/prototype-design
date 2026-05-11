@@ -328,6 +328,8 @@ changes:
 
 包含：按钮样式、素材网格（5列固定布局）、分页组件、分类树。
 
+详细补充（色彩体系、布局系统、表单规范、动画、响应式等）：[components/backend-reference.md](components/backend-reference.md)
+
 ### 1.5 后台页面模板
 
 详见 [templates/backend-template.md](templates/backend-template.md)
