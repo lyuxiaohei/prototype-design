@@ -1,13 +1,8 @@
 ---
 name: prototype-design
 description: 原型设计规范，支持双模式生成符合项目UI设计标准的纯HTML页面代码。纯口述模式支持直接口述需求，草案模式支持logic-list-spec草案输入。包含后台管理系统和小程序两套设计体系，当用户要求创建新页面、组件或修改UI相关代码时，必须严格遵循对应规范确保风格一致性。
-version: "3.0"
+version: "3.4"
 date_added: "2026-04-24"
-changes:
-  - V3.0: 新增草案模式，支持logic-list-spec草案输入；重构为双模式并行架构；新增解析器、映射器、验证器规则文件
-  - V2.1: 禁用Emoji，新增资源推荐章节（Icon/图片网站），新增SVG图标代码库，skill重命名为prototype-design
-  - V2.0: 新增小程序设计规范章节，重构为双规范并行结构
-  - V1.0: 后台管理系统设计规范
 ---
 
 # 原型设计规范 V3.0
@@ -146,7 +141,7 @@ changes:
 | 状态流转表 | 交互逻辑生成 |
 | 页面导航关系 | 跳转逻辑生成 |
 
-草案输入示例见：[reference/draft-input-example.md](reference/draft-input-example.md)
+草案输入示例见：[references/draft-input-example.md](references/draft-input-example.md)
 
 ---
 
@@ -227,46 +222,9 @@ changes:
 3. **原生JS**: 使用ES6+语法，无需编译
 4. **禁止Emoji**: 所有UI元素禁止使用Emoji，使用SVG图标替代
 
-### Emoji与图标使用规范
+### 禁止Emoji
 
-**重要：本项目全面禁止使用Emoji，所有图标必须使用SVG或纯文字。**
-
-**禁止使用Emoji的场景：**
-
-| 场景 | 说明 | 替代方案 |
-|------|------|----------|
-| **导航菜单** | 侧边栏菜单项、底部Tab栏 | 使用SVG图标或纯文字 |
-| **按钮** | 所有类型按钮 | 仅使用纯文字 |
-| **Tab标签** | 页面内的Tab切换标签 | 仅使用纯文字 |
-| **表单标签** | 表单字段标签、表单标题 | 仅使用纯文字 |
-| **弹窗标题** | Modal弹窗的标题文字 | 仅使用纯文字 |
-| **空状态** | 空数据提示区域 | 仅使用纯文字 |
-| **文件树** | 文件/文件夹图标 | 使用SVG图标 |
-| **播放按钮** | 视频封面播放图标 | 使用SVG播放图标 |
-| **关闭按钮** | 弹窗关闭按钮 | 使用 × 符号或SVG |
-
-**SVG图标使用方式：**
-
-推荐使用内联SVG，无需额外依赖：
-
-```html
-<!-- 搜索图标 -->
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-  <circle cx="11" cy="11" r="8"/>
-  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-</svg>
-
-<!-- 返回图标 -->
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-  <polyline points="15 18 9 12 15 6"/>
-</svg>
-
-<!-- 关闭图标 -->
-<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-  <line x1="18" y1="6" x2="6" y2="18"/>
-  <line x1="6" y1="6" x2="18" y2="18"/>
-</svg>
-```
+所有UI元素禁止使用Emoji，使用内联SVG图标或纯文字替代。常用SVG见 [references/svg-icons.md](references/svg-icons.md)。
 
 ### 字体规范
 
@@ -280,7 +238,7 @@ changes:
 
 ---
 
-## 一、后台设计规范（运营管理系统）
+## 后台设计规范（运营管理系统）
 
 适用于：素材库、页面装修、订单管理（运营侧）、售后审批等PC端运营工具。
 
@@ -336,7 +294,7 @@ changes:
 
 ---
 
-## 二、小程序设计规范（苏银豆商城）
+## 小程序设计规范（苏银豆商城）
 
 适用于：商品详情、购物车、下单支付、订单列表、售后申请等移动端用户界面。
 
@@ -412,7 +370,7 @@ changes:
 
 ---
 
-## 三、设计决策表
+## 设计决策表
 
 当不确定使用哪套规范时，参考以下判断：
 
@@ -430,7 +388,7 @@ changes:
 
 ---
 
-## 四、后台开发检查清单
+## 后台开发检查清单
 
 创建后台页面时，核对以下规范：
 
@@ -450,14 +408,14 @@ changes:
 
 ---
 
-## 五、资源推荐
+## 资源推荐
 
-详见 [reference/resources.md](reference/resources.md)
+详见 [references/resources.md](references/resources.md)
 
 包含：Icon图标下载网站、图片素材下载网站。
 
-## 六、小程序图标资源
+## 小程序图标资源
 
-详见 [reference/svg-icons.md](reference/svg-icons.md)
+详见 [references/svg-icons.md](references/svg-icons.md)
 
 包含：首页、分类、购物车、收藏、用户、返回、搜索、更多、WiFi、电池等SVG图标代码。
