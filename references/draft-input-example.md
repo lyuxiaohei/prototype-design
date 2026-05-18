@@ -1,4 +1,4 @@
-# 草案输入示例 V3.0
+# 草案输入示例
 
 展示 logic-list-spec 输出的草案文档作为 prototype-design 草案模式的完整输入示例。
 
