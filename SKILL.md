@@ -1,11 +1,13 @@
 ---
 name: prototype-design
 description: 原型设计规范，支持双模式生成符合项目UI设计标准的纯HTML页面代码。纯口述模式支持直接口述需求，草案模式支持logic-list-spec草案输入。包含后台管理系统和小程序两套设计体系，当用户要求创建新页面、组件或修改UI相关代码时，必须严格遵循对应规范确保风格一致性。
-version: "0.5"
+version: "0.50"
 date_added: "2026-04-24"
 ---
 
-# 原型设计规范 V0.5
+# 原型设计规范 V0.50
+
+> 版本管理见 [VERSIONING.md](VERSIONING.md)
 
 本技能定义了项目的UI设计标准和规范，确保生成的页面与现有系统风格保持一致。项目采用**纯HTML/CSS/JavaScript**实现，无需任何构建工具或框架依赖。
 
