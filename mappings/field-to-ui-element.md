@@ -1,12 +1,16 @@
-# 字段到UI元素映射规则
+# 字段到UI元素映射规则 V2.0
 
 定义如何将关键字段数据来源表中的字段映射到具体的UI元素。
+
+V2.0 变更：适配 logic-list-spec V0.22 的四列溯源三问格式（字段/从哪来/往哪去/变了怎么办），新增数据流向和变更策略映射。
 
 ---
 
 ## 映射原则
 
 **一字段一元素**：每个字段对应至少一个UI展示或输入元素。
+
+**三问驱动映射**：从哪来→可编辑性、往哪去→提交绑定、变了怎么办→校验/更新逻辑。
 
 ---
 
@@ -32,18 +36,70 @@
 
 ---
 
-## 数据来源映射规则
+## 数据溯源三问映射（V0.22 四列格式）
 
-### 数据来源类型 → UI可编辑性
+字段表从 2 列（字段/数据来源）扩展为 4 列溯源三问（字段/从哪来/往哪去/变了怎么办）。三个维度各自驱动不同的 UI 配置。
 
-| 数据来源关键词 | 数据来源类型 | UI可编辑性 | 组件样式 |
-|----------------|--------------|------------|----------|
+### 一问：从哪来 → UI 可编辑性
+
+| 从哪来关键词 | 来源类型 | UI可编辑性 | 组件样式 |
+|--------------|----------|------------|----------|
 | 用户操作、用户输入、用户填写 | `user_input` | **可编辑** | 输入组件、placeholder |
 | 用户选择、Tab选择、下拉选择 | `user_select` | **可选择** | 选择组件、选项列表 |
 | 系统生成、自动记录、自动生成 | `system_generated` | **不可编辑** | 展示组件、灰色背景 |
 | 品牌商城后台、后台、API查询 | `api_query` | **动态加载** | 展示组件、loading状态 |
 | 上一页面传入、上一页传入 | `prev_page` | **预填充** | 展示组件、可修改 |
 | 前端实时计算、实时计算 | `frontend_calc` | **动态展示** | 展示组件、实时更新 |
+| 本地存储、localStorage | `local_storage` | **只读展示** | 展示组件、持久化 |
+
+**兼容性：** 若字段表仍为旧版 2 列格式，"数据来源"内容等同于此处的"从哪来"，可编辑性推断逻辑不变。
+
+### 二问：往哪去 → 提交绑定
+
+| 往哪去关键词 | 去向类型 | UI 处理 |
+|--------------|----------|---------|
+| 提交xxx API、POST /api/xxx | `submit_api` | 表单字段加入提交 payload，绑定提交事件 |
+| 写入xxx表 | `write_table` | 隐含在提交逻辑中，字段加入 payload |
+| 触发xxx流程 | `trigger_flow` | 提交后触发后续流程（跳转/调用） |
+| 仅展示、不提交 | `display_only` | 纯展示组件，不参与提交 |
+| 校验逻辑 | `validation_only` | 用于前端校验，不提交 |
+
+**提交绑定输出：**
+
+```json
+{
+  "field_name": "收货地址",
+  "submit_binding": {
+    "type": "submit_api",
+    "payload_key": "address_id",
+    "required": true
+  }
+}
+```
+
+### 三问：变了怎么办 → 校验/更新逻辑
+
+| 变了怎么办关键词 | 变更策略类型 | UI 处理 |
+|------------------|--------------|---------|
+| 实时刷新、实时同步 | `realtime_sync` | 数据变化触发重渲染/重算 |
+| 手动刷新 | `manual_refresh` | 提供刷新按钮/下拉刷新 |
+| 不影响已提交、不可变 | `immutable` | 提交后字段置只读 |
+| 触发通知 | `trigger_notify` | 状态变更展示通知提示 |
+| 重新校验 | `revalidate` | 源数据变化时重新校验依赖项 |
+| 不处理 | `none` | 无特殊处理 |
+
+**变更策略输出：**
+
+```json
+{
+  "field_name": "商品价格",
+  "change_policy": {
+    "type": "realtime_sync",
+    "trigger": "priceUpdate",
+    "action": "recalculateTotal"
+  }
+}
+```
 
 ---
 
@@ -55,16 +111,28 @@
 字段名称 → 关键词匹配 → 推断字段类型 → 确定UI元素类型
 ```
 
-### Step 2: 数据来源可编辑性判断
+### Step 2: 从哪来 → 可编辑性判断
 
 ```
-数据来源 → 关键词匹配 → 推断数据来源类型 → 确定可编辑性
+从哪来 → 关键词匹配 → 推断来源类型 → 确定可编辑性
 ```
 
-### Step 3: UI元素配置生成
+### Step 3: 往哪去 → 提交绑定（V0.22）
 
 ```
-字段类型 + 数据来源类型 → 选择具体组件 → 生成配置JSON
+往哪去 → 关键词匹配 → 推断去向类型 → 生成提交绑定配置
+```
+
+### Step 4: 变了怎么办 → 变更策略（V0.22）
+
+```
+变了怎么办 → 关键词匹配 → 推断变更策略 → 生成校验/更新逻辑
+```
+
+### Step 5: UI元素配置生成
+
+```
+字段类型 + 来源类型 + 去向 + 变更策略 → 选择具体组件 → 生成配置JSON
 ```
 
 ---
@@ -132,12 +200,14 @@
 ### 示例字段1
 
 ```markdown
-| 申请类型 | 用户操作 — Tab选择 `[草案]` |
+| 申请类型 | 用户操作 — Tab选择 | 提交售后API — 写入售后单类型字段 | 不可变，提交后不可修改 |
 ```
 
 **映射分析：**
 - 字段名称：申请类型 → `enum` 类型
-- 数据来源：用户操作 — Tab选择 → `user_select` → 可选择
+- 从哪来：用户操作 — Tab选择 → `user_select` → 可选择
+- 往哪去：提交售后API → `submit_api` → 加入 payload
+- 变了怎么办：不可变 → `immutable` → 提交后置只读
 
 **映射输出（小程序）：**
 ```json
@@ -145,6 +215,8 @@
   "field_name": "申请类型",
   "field_type": "enum",
   "data_source": "user_select",
+  "submit_binding": {"type": "submit_api", "payload_key": "apply_type", "required": true},
+  "change_policy": {"type": "immutable"},
   "ui_element": "Tab栏",
   "config": {
     "items": ["仅退款", "退货退款"],
@@ -157,12 +229,14 @@
 ### 示例字段2
 
 ```markdown
-| 凭证图片 | 用户操作 — 图片上传 `[草案]` |
+| 凭证图片 | 用户操作 — 图片上传 | 提交售后API — 上传至图片存储服务 | 不可变 |
 ```
 
 **映射分析：**
 - 字段名称：凭证图片 → `image[]` 类型
-- 数据来源：用户操作 — 图片上传 → `user_input` → 可编辑（上传）
+- 从哪来：用户操作 — 图片上传 → `user_input` → 可编辑（上传）
+- 往哪去：提交售后API → `submit_api` → 上传文件
+- 变了怎么办：不可变 → `immutable`
 
 **映射输出（小程序）：**
 ```json
@@ -170,6 +244,8 @@
   "field_name": "凭证图片",
   "field_type": "image[]",
   "data_source": "user_input",
+  "submit_binding": {"type": "submit_api", "payload_key": "images", "upload": true},
+  "change_policy": {"type": "immutable"},
   "ui_element": "Upload",
   "config": {
     "max_count": 3,
@@ -183,12 +259,14 @@
 ### 示例字段3
 
 ```markdown
-| 申请状态 | 品牌商城后台售后管理 `[待确认]` |
+| 申请状态 | 品牌商城后台售后管理 `[待确认]` | 展示+校验 — 售后进度展示 | 后台审核变更→前端状态同步 |
 ```
 
 **映射分析：**
 - 字段名称：申请状态 → `enum(status)` 类型
-- 数据来源：品牌商城后台 → `api_query` → 不可编辑（动态加载）
+- 从哪来：品牌商城后台 → `api_query` → 不可编辑（动态加载）
+- 往哪去：展示+校验 → `validation_only` → 仅展示
+- 变了怎么办：后台审核变更→前端状态同步 → `realtime_sync`
 
 **映射输出（小程序）：**
 ```json
@@ -196,6 +274,8 @@
   "field_name": "申请状态",
   "field_type": "enum(status)",
   "data_source": "api_query",
+  "submit_binding": {"type": "validation_only"},
+  "change_policy": {"type": "realtime_sync", "trigger": "statusUpdate", "action": "refreshStatus"},
   "ui_element": "状态标签(彩色)",
   "config": {
     "status_colors": {
@@ -234,7 +314,7 @@
 ### 商品信息字段
 
 ```markdown
-| 商品信息（图片/名称/规格/价格） | 品牌商城后台商品管理 |
+| 商品信息（图片/名称/规格/价格） | 品牌商城后台商品管理 — SKU字段 | 提交订单API — 用于订单创建 | 后台改价→前端实时刷新 |
 ```
 
 **映射输出：**
@@ -248,6 +328,9 @@
     {"name": "规格", "type": "spec", "ui": "规格标签"},
     {"name": "价格", "type": "price", "ui": "价格标签"}
   ],
+  "data_source": "api_query",
+  "submit_binding": {"type": "submit_api", "payload_key": "sku_info"},
+  "change_policy": {"type": "realtime_sync", "trigger": "priceUpdate"},
   "ui_element": "商品卡片"
 }
 ```
@@ -255,7 +338,7 @@
 ### 订单信息字段
 
 ```markdown
-| 订单信息（订单号/下单时间/支付方式） | 品牌商城后台订单系统 |
+| 订单信息（订单号/下单时间/支付方式） | 品牌商城后台订单系统 | 展示 — 订单详情展示 | 不可变 |
 ```
 
 **映射输出：**
@@ -268,6 +351,9 @@
     {"name": "下单时间", "type": "datetime", "ui": "时间文本"},
     {"name": "支付方式", "type": "enum", "ui": "支付方式标签"}
   ],
+  "data_source": "api_query",
+  "submit_binding": {"type": "validation_only"},
+  "change_policy": {"type": "immutable"},
   "ui_element": "订单信息卡"
 }
 ```
