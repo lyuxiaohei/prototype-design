@@ -332,7 +332,7 @@ V2.0 变更：新增前置条件→条件渲染/禁用映射、异常分支→�
 | 绿色、绿色背景、绿色标签 | `background: #52c41a; color: #fff` |
 | 灰色、灰色背景、置灰 | `background: #f5f5f5; color: #999` |
 | 蓝色、蓝色背景、蓝色标签 | `background: #2196f3; color: #fff` |
-| 高亮、选中高亮 | `background: #e6f7ff; color: #1890ff` |
+| 高亮、选中高亮 | `background: #e6f4ff; color: #1677ff` |
 | 置灰、禁用、按钮置灰 | `disabled: true; opacity: 0.5` |
 | 半透明、图片半透明 | `opacity: 0.5` |
 

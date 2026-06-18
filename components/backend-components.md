@@ -11,8 +11,8 @@
 
 | 用途   | 色值      | CSS变量 | 使用场景 |
 | ------ | --------- | ------- | -------- |
-| 主色   | `#1890ff` | `--primary-color` | 主按钮、Logo、hover状态、链接 |
-| 背景灰 | `#f5f5f5` | `--bg-color` | 页面背景 |
+| 主色   | `#1677ff` | `--primary-color` | 主按钮、Logo、hover状态、链接（Ant Design v5） |
+| 背景灰 | `#f0f2f5` | `--bg-color` | 页面背景 |
 | 内容白 | `#ffffff` | `--card-bg` | 卡片、内容区背景 |
 | 错误红 | `#ff4d4f` | `--error-color` | 错误状态、危险操作 |
 | 成功绿 | `#52c41a` | `--success-color` | 成功状态 |
@@ -22,11 +22,11 @@
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    Header (64px)                         │
-│  Logo区域：商城运营后台 / 运营管理系统                      │
+│                    Header (56px)                         │
+│  Logo区域：供应链平台 / 运营管理系统                      │
 ├────────────┬────────────────────────────────────────────┤
 │   Sider    │              Content                       │
-│  (200px)   │           (padding: 20px)                  │
+│  (208px)   │           (padding: 20px)                  │
 │  垂直菜单   │                                          │
 └────────────┴────────────────────────────────────────────┘
 ```
@@ -34,8 +34,8 @@
 | 参数 | 值 |
 |------|-----|
 | 最小宽度 | 1200px |
-| Header高度 | 64px |
-| Sider宽度 | 200px（可折叠为80px） |
+| Header高度 | 56px |
+| Sider宽度 | 208px（可折叠为80px） |
 | 内容区padding | 20px |
 | 卡片圆角 | 8px |
 | 按钮圆角 | 6px |
@@ -56,8 +56,8 @@
   background: #fff;
   color: #333;
 }
-.btn:hover { border-color: #1890ff; color: #1890ff; }
-.btn-primary { background: #1890ff; border-color: #1890ff; color: #fff; }
+.btn:hover { border-color: #1677ff; color: #1677ff; }
+.btn-primary { background: #1677ff; border-color: #1677ff; color: #fff; }
 .btn-danger { color: #ff4d4f; border-color: #ff4d4f; }
 ```
 
@@ -81,7 +81,7 @@
 
 ```css
 .page-btn { min-width: 36px; height: 36px; border-radius: 6px; }
-.page-btn.active { background: #1890ff; color: #fff; }
+.page-btn.active { background: #1677ff; color: #fff; }
 ```
 
 #### 分类树
@@ -89,17 +89,17 @@
 ```css
 .category-panel { width: 220px; }
 .category-item { padding: 8px 16px; cursor: pointer; }
-.category-item.active { background: #e6f7ff; color: #1890ff; }
+.category-item.active { background: #e6f4ff; color: #1677ff; }
 ```
 
 ### 后台开发检查清单
 
-- [ ] 主色调使用 `#1890ff`
-- [ ] 背景色使用 `#f5f5f5`（页面）或 `#fff`（卡片）
-- [ ] Header高度 64px，Sider宽度 200px
+- [ ] 主色调使用 `#1677ff`（Ant Design v5）
+- [ ] 背景色使用 `#f0f2f5`（页面）或 `#fff`（卡片）
+- [ ] Header高度 56px，Sider宽度 208px
 - [ ] 内容区 padding: 20px
 - [ ] 弹窗居中显示，圆角 8px
-- [ ] 系统名称使用"商城运营后台"
+- [ ] 系统名称使用"供应链平台"
 - [ ] CSS使用变量管理颜色
 - [ ] 图片设置 `object-fit: cover`
 - [ ] 素材网格使用 5 列固定布局

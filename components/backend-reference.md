@@ -17,15 +17,15 @@
 
 ```css
 /* 主色系 */
---primary-color: #1890ff;
+--primary-color: #1677ff;
 --primary-hover: #40a9ff;
---primary-active: #096dd9;
+--primary-active: #0958d9;
 
 /* 功能色 */
 --success-color: #52c41a;
 --warning-color: #faad14;
 --error-color: #ff4d4f;
---info-color: #1890ff;
+--info-color: #1677ff;
 
 /* 中性色 */
 --heading-color: rgb(0 0 0 / 88%);
@@ -122,7 +122,7 @@ box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 			.logo-title {
 				font-size: 18px;
 				font-weight: 600;
-				color: #1890ff;
+				color: #1677ff;
 				line-height: 1.2;
 			}
 
@@ -149,7 +149,7 @@ box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
 			transition: color 0.3s;
 
 			&:hover {
-				color: #1890ff;
+				color: #1677ff;
 			}
 		}
 	}
@@ -520,7 +520,7 @@ confirm({
     transition: all 0.3s;
 
     &:hover {
-      border-color: #1890ff;
+      border-color: #1677ff;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 
       .card-actions {
@@ -529,7 +529,7 @@ confirm({
     }
 
     &.selected {
-      border-color: #1890ff;
+      border-color: #1677ff;
       background: #e6f4ff;
 
       .card-checkbox {
@@ -623,7 +623,7 @@ confirm({
 
           &:hover {
             background: #f5f5f5;
-            color: #1890ff;
+            color: #1677ff;
           }
         }
 
@@ -725,19 +725,19 @@ confirm({
       transition: all 0.2s ease;
       
       &:hover {
-        border-color: #1890ff;
+        border-color: #1677ff;
         background: #fff;
         transform: translateY(-1px);
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
         
         a {
-          color: #1890ff;
+          color: #1677ff;
         }
       }
       
       &.ant-pagination-item-active {
-        background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
-        border-color: #1890ff;
+        background: linear-gradient(135deg, #1677ff 0%, #0958d9 100%);
+        border-color: #1677ff;
         font-weight: 500;
         box-shadow: 0 2px 8px rgba(24, 144, 255, 0.3);
         
@@ -762,8 +762,8 @@ confirm({
       
       &:hover {
         .ant-pagination-item-link {
-          border-color: #1890ff;
-          color: #1890ff;
+          border-color: #1677ff;
+          color: #1677ff;
           background: #fff;
           transform: translateY(-1px);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
@@ -787,12 +787,12 @@ confirm({
           transition: all 0.2s ease;
           
           &:hover {
-            border-color: #1890ff;
+            border-color: #1677ff;
           }
           
           &.ant-select-focused {
             .ant-select-selector {
-              border-color: #1890ff;
+              border-color: #1677ff;
               box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
             }
           }
@@ -817,7 +817,7 @@ confirm({
         
         &:hover,
         &:focus {
-          border-color: #1890ff;
+          border-color: #1677ff;
           box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.1);
         }
       }
